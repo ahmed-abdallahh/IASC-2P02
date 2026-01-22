@@ -8,7 +8,7 @@ const canvas = document.querySelector('.webgl')
 
 //Scene
 const scene = new THREE.Scene()
-scene.background = new THREE.Color('grey')
+scene.background = new THREE.Color('black')
 
 //Camera
 const camera = new THREE.PerspectiveCamera(
@@ -38,6 +38,13 @@ const testSphere = new THREE.Mesh(sphereGeometry, sphereMaterial );
 
 scene.add(testSphere)
 
+// testBox
+const boxGeometry = new THREE.BoxGeometry(1, 1, 1);
+const boxMaterial = new THREE.MeshNormalMaterial();
+const box = new THREE.Mesh(boxGeometry, boxMaterial);
+
+scene.add(box);
+box.position.x = 2;
 
 /********************
  ** ANIMATION LOOP ** 
@@ -52,10 +59,19 @@ const animation = () =>
     // Animate testSphere
     testSphere.position.y = Math.sin(elapsedTime)
 
-    //renderer
+    // Animate box 
+    box.position.x = Math.cos(elapsedTime) * 2;
+    box.position.y = Math.sin(elapsedTime) * 3;
+
+    // Rotate box 
+    box.rotation.x = elapsedTime;
+    box.rotation.y = elapsedTime;
+
+
+    // Renderer
     renderer.render(scene, camera)
 
-    //request next frame
+    // Request next frame
     window.requestAnimationFrame(animation)
 
 }
